@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,6 +14,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,16 +61,25 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e) {
         }
 
-        String[] members = {"mhidaka", "rongon_xp", "kacchi0516", "kobashinG",
-                "seit", "kei_i_t", "furusin_oriver"};
-
         lv = (ListView) findViewById(R.id.eventListView);
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_expandable_list_item_1, members);
-
+        ArrayList<Event> list = new ArrayList<>();
+        EventAdapter adapter = new EventAdapter(MainActivity.this);
+        adapter.setTweetList(list);
         lv.setAdapter(adapter);
+
+
+        Event tweet = new Event();
+        tweet.setTitle("Swift Event");
+        tweet.setStartAt(new Date());
+        list.add(tweet);
+
+        Event tweet2 = new Event();
+        tweet2.setTitle("Android Event");
+        tweet2.setStartAt(new Date());
+        list.add(tweet2);
+
+        adapter.notifyDataSetChanged();
     }
 
     // 地図の初期設定
