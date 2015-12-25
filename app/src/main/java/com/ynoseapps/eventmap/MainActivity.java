@@ -1,11 +1,20 @@
 package com.ynoseapps.eventmap;
 
+import android.annotation.TargetApi;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e) {
         }
 
-        String[] members = { "mhidaka", "rongon_xp", "kacchi0516", "kobashinG",
-                "seit", "kei_i_t", "furusin_oriver" };
+        String[] members = {"mhidaka", "rongon_xp", "kacchi0516", "kobashinG",
+                "seit", "kei_i_t", "furusin_oriver"};
 
         lv = (ListView) findViewById(R.id.eventListView);
 
@@ -63,12 +72,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 地図の初期設定
+    @TargetApi(Build.VERSION_CODES.M)
     private void mapInit() {
 
         // 地図タイプ設定（1）
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         // 現在位置ボタンの表示（2）
+        if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
         googleMap.setMyLocationEnabled(true);
 
         // 東京駅の位置、ズーム設定（3）
