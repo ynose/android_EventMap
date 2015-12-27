@@ -17,7 +17,7 @@ public class Event {
     }
 
     public Long getId() {
-        return id;
+        return new Long(1); //id;
     }
 
     public void setTitle(String title) {

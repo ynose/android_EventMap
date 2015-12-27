@@ -23,7 +23,7 @@ public class EventAdapter extends BaseAdapter {
         this.layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setTweetList(ArrayList<Event> eventList) {
+    public void setEventList(ArrayList<Event> eventList) {
         this.eventList = eventList;
     }
 
