@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,7 +31,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private GoogleMap googleMap;
     ListView lv;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -75,30 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.eventListView);
 
-//        ArrayList<Event> list = new ArrayList<>();
-//        EventAdapter adapter = new EventAdapter(MainActivity.this);
-//        adapter.setTweetList(list);
-//        lv.setAdapter(adapter);
-//
-//
-//        Event tweet = new Event();
-//        tweet.setTitle("Swift Event");
-//        tweet.setStartAt(new Date());
-//        list.add(tweet);
-//
-//        Event tweet2 = new Event();
-//        tweet2.setTitle("Android Event");
-//        tweet2.setStartAt(new Date());
-//        list.add(tweet2);
-
-//        adapter.notifyDataSetChanged();
 
         // HttpURLConnectionに必要
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
 
         checkNetwork();
 
-        getEvent();
+        getEvent("iOS");
     }
 
     private void checkNetwork() {
@@ -109,10 +94,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getEvent() {
+    private void getEvent(String keyword) {
+
         HttpURLConnection connection = null;
         try {
-            URL url = new URL("http://api.doorkeeper.jp/events?sort=starts_at&q=Swift");
+            URL url = new URL("http://api.doorkeeper.jp/events?sort=starts_at&q=" + keyword);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
@@ -132,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            ArrayList<Event> list = new ArrayList<>();
+            ArrayList<Event> list = new ArrayList<Event>();
             EventAdapter adapter = new EventAdapter(MainActivity.this);
             adapter.setEventList(list);
             lv.setAdapter(adapter);
@@ -193,7 +179,26 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+
+        SearchView searchView = (SearchView)menu.findItem(R.id.menu_search).getActionView();
+        searchView.setOnQueryTextListener(this);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
+
+        getEvent(query);
+
+        return false;
     }
 
     @Override
@@ -204,9 +209,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
