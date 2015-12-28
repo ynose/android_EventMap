@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
@@ -131,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                 Event event = new Event();
                 event.setTitle(eventJson.getString("title"));
-                event.setStartAt(new Date());
+                event.setStartAtString(eventJson.getString("starts_at"));
                 list.add(event);
             }
 

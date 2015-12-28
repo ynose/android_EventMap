@@ -1,6 +1,9 @@
 package com.ynoseapps.eventmap;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by yoshio on 15/12/25.
@@ -31,9 +34,21 @@ public class Event {
     public void setStartAt(Date startAt) {
         this.startAt = startAt;
     }
+    public void setStartAtString(String startAt) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            this.startAt = dateFormat.parse(startAt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public Date getStartAt() {
-        return startAt;
+    public Date getStartAt() { return startAt; }
+    public String getStartAtString() {
+        SimpleDateFormat output = new SimpleDateFormat("M月d日 EEEE H:mm");
+        output.setTimeZone(TimeZone.getDefault());
+        return output.format(this.startAt);
     }
 
 }
