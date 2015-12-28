@@ -9,6 +9,8 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private GoogleMap googleMap;
     ListView lv;
+    ArrayList<Event> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
 
         lv = (ListView) findViewById(R.id.eventListView);
+        //リスト項目がクリックされた時の処理
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), list.get(position).getTitle(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
 
 
         // HttpURLConnectionに必要
@@ -117,13 +128,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
             }
 
-            ArrayList<Event> list = new ArrayList<Event>();
+            this.list = new ArrayList<Event>();
             EventAdapter adapter = new EventAdapter(MainActivity.this);
-            adapter.setEventList(list);
+            adapter.setEventList(this.list);
             lv.setAdapter(adapter);
 
             // JSONをパース
-            StringBuilder viewStrBuilder = new StringBuilder();
+            //StringBuilder viewStrBuilder = new StringBuilder();
             JSONArray result = new JSONArray(new String(responseArray.toByteArray()));
             for(int i = 0; i < result.length(); i++) {
                 JSONObject eventJson = result.getJSONObject(i).getJSONObject("event");
@@ -131,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 Event event = new Event();
                 event.setTitle(eventJson.getString("title"));
                 event.setStartAtString(eventJson.getString("starts_at"));
-                list.add(event);
+                this.list.add(event);
             }
 
             adapter.notifyDataSetChanged();
@@ -214,4 +225,5 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         return super.onOptionsItemSelected(item);
     }
+
 }

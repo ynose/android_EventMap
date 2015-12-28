@@ -17,14 +17,12 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5acf748a-0456-484d-b223-c3fd15d594fb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/Event.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/Event.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/EventAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/EventAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="android_EventMap.iws" />
@@ -55,27 +53,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.66129035">
+              <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3836#3843#0" expanded="true" />
-                <element signature="e#6618#6619#0" expanded="true" />
-                <element signature="e#6646#6647#0" expanded="true" />
+                <element signature="e#2549#2867#0" expanded="true" />
+                <element signature="e#2866#2867#0" expanded="true" />
+                <element signature="e#7089#7090#0" expanded="true" />
+                <element signature="e#7117#7118#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EventAdapter.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EventAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/EventAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29032257">
-              <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="36" column="26" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
+              <folding>
+                <element signature="e#868#869#0" expanded="true" />
+                <element signature="e#914#915#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1747,9 +1749,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/action_bar_menu.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/Event.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/EventAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -1810,6 +1812,10 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1956,10 +1962,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2205,7 +2207,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451311216225</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="イベントの開始日時を表示">
+      <created>1451313834850</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1451313834850</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2214,7 +2222,6 @@
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287037" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287037" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2237,6 +2244,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -2260,11 +2268,12 @@
     <MESSAGE value="イベントリストのカスタマイズ" />
     <MESSAGE value="とりあえずDoorKeeperからイベントJSonを取得できた" />
     <MESSAGE value="ActionBarにSearchViewを組み込み" />
-    <option name="LAST_COMMIT_MESSAGE" value="ActionBarにSearchViewを組み込み" />
+    <MESSAGE value="イベントの開始日時を表示" />
+    <option name="LAST_COMMIT_MESSAGE" value="イベントの開始日時を表示" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="28" />
+      <option name="time" value="32" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2272,12 +2281,52 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2549#2867#0" expanded="true" />
+            <element signature="e#2866#2867#0" expanded="true" />
+            <element signature="e#7089#7090#0" expanded="true" />
+            <element signature="e#7117#7118#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/EventAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#868#869#0" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/Event.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="34" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#298#299#0" expanded="true" />
+            <element signature="e#326#327#0" expanded="true" />
+            <element signature="e#353#354#0" expanded="true" />
+            <element signature="e#393#394#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="141" column="39" selection-start-line="141" selection-start-column="39" selection-end-line="141" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3836#3843#0" expanded="true" />
-            <element signature="e#6618#6619#0" expanded="true" />
-            <element signature="e#6646#6647#0" expanded="true" />
+            <element signature="e#2549#2867#0" expanded="true" />
+            <element signature="e#2866#2867#0" expanded="true" />
+            <element signature="e#7089#7090#0" expanded="true" />
+            <element signature="e#7117#7118#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2294,7 +2343,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2304,9 +2352,10 @@
           <caret line="96" column="19" selection-start-line="96" selection-start-column="19" selection-end-line="96" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3836#3843#0" expanded="true" />
-            <element signature="e#6618#6619#0" expanded="true" />
-            <element signature="e#6646#6647#0" expanded="true" />
+            <element signature="e#2549#2867#0" expanded="true" />
+            <element signature="e#2866#2867#0" expanded="true" />
+            <element signature="e#7089#7090#0" expanded="true" />
+            <element signature="e#7117#7118#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2335,9 +2384,10 @@
           <caret line="77" column="30" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3836#3843#0" expanded="true" />
-            <element signature="e#6618#6619#0" expanded="true" />
-            <element signature="e#6646#6647#0" expanded="true" />
+            <element signature="e#2549#2867#0" expanded="true" />
+            <element signature="e#2866#2867#0" expanded="true" />
+            <element signature="e#7089#7090#0" expanded="true" />
+            <element signature="e#7117#7118#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2366,9 +2416,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3836#3843#0" expanded="true" />
-            <element signature="e#6618#6619#0" expanded="true" />
-            <element signature="e#6646#6647#0" expanded="true" />
+            <element signature="e#2549#2867#0" expanded="true" />
+            <element signature="e#2866#2867#0" expanded="true" />
+            <element signature="e#7089#7090#0" expanded="true" />
+            <element signature="e#7117#7118#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2388,8 +2439,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
           <folding>
-            <element signature="e#687#688#0" expanded="false" />
-            <element signature="e#729#730#0" expanded="false" />
+            <element signature="e#868#869#0" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2399,8 +2450,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
           <folding>
-            <element signature="e#501#502#0" expanded="false" />
-            <element signature="e#529#530#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#298#299#0" expanded="true" />
+            <element signature="e#326#327#0" expanded="true" />
+            <element signature="e#353#354#0" expanded="true" />
+            <element signature="e#393#394#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2429,9 +2483,10 @@
           <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3836#3843#0" expanded="true" />
-            <element signature="e#6618#6619#0" expanded="true" />
-            <element signature="e#6646#6647#0" expanded="true" />
+            <element signature="e#2549#2867#0" expanded="true" />
+            <element signature="e#2866#2867#0" expanded="true" />
+            <element signature="e#7089#7090#0" expanded="true" />
+            <element signature="e#7117#7118#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2460,9 +2515,10 @@
           <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3836#3843#0" expanded="true" />
-            <element signature="e#6618#6619#0" expanded="true" />
-            <element signature="e#6646#6647#0" expanded="true" />
+            <element signature="e#2549#2867#0" expanded="true" />
+            <element signature="e#2866#2867#0" expanded="true" />
+            <element signature="e#7089#7090#0" expanded="true" />
+            <element signature="e#7117#7118#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2520,7 +2576,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2528,7 +2583,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.2777778">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2566,7 +2620,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2624,19 +2677,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3836#3843#0" expanded="true" />
-            <element signature="e#6618#6619#0" expanded="true" />
-            <element signature="e#6646#6647#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/Event.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2653,9 +2693,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/EventAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29032257">
-          <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="26" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
+          <folding>
+            <element signature="e#868#869#0" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/android-sdk-macosx/sources/android-23/android/widget/AdapterView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33225808">
+          <caret line="272" column="13" selection-start-line="272" selection-start-column="13" selection-end-line="272" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/android-sdk-macosx/sources/android-23/android/view/ViewRootImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31451613">
+          <caret line="5541" column="21" selection-start-line="5541" selection-start-column="21" selection-end-line="5541" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ynoseapps/eventmap/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.66129035">
+          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2549#2867#0" expanded="true" />
+            <element signature="e#2866#2867#0" expanded="true" />
+            <element signature="e#7089#7090#0" expanded="true" />
+            <element signature="e#7117#7118#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
