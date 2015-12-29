@@ -11,14 +11,25 @@ import java.util.TimeZone;
 public class Event {
 
     Long id;
+    String pk;
     String title;
     Date startAt;
+    Date endedAt;
+    String venueName;
+    String address;
+    Double latitude;
+    Double longitude;
+    String url;
+    Integer limit;
+    Integer accepted;
+    Integer waiting;
+    Boolean join;
+    Date updateAt;
 
 
     public void setId(Long id) {
         this.id = id;
     }
-
     public Long getId() {
         return new Long(1); //id;
     }
@@ -26,7 +37,6 @@ public class Event {
     public void setTitle(String title) {
         this.title = title;
     }
-
     public String getTitle() {
         return title;
     }
@@ -45,10 +55,13 @@ public class Event {
     }
 
     public Date getStartAt() { return startAt; }
-    public String getStartAtString() {
+    public String getStartAtFormatedString() {
         SimpleDateFormat output = new SimpleDateFormat("M月d日 EEEE H:mm");
         output.setTimeZone(TimeZone.getDefault());
         return output.format(this.startAt);
     }
+
+    public void setUrl(String url) { this.url = url;}
+    public String getUrl() { return url; }
 
 }

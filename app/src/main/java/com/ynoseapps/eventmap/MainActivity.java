@@ -1,6 +1,7 @@
 package com.ynoseapps.eventmap;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -82,8 +83,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), list.get(position).getTitle(),
-                        Toast.LENGTH_LONG).show();
+
+//                Uri uri = Uri.parse(list.get(position).getUrl());
+//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                startActivity(intent);
+
+                Intent intent = new Intent(getApplicationContext(), WebsiteView.class);
+                intent.putExtra("url", list.get(position).getUrl());
+                startActivity(intent);
+
             }
         });
 
@@ -142,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 Event event = new Event();
                 event.setTitle(eventJson.getString("title"));
                 event.setStartAtString(eventJson.getString("starts_at"));
+                event.setUrl(eventJson.getString("public_url"));
                 this.list.add(event);
             }
 

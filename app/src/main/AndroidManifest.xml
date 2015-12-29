@@ -42,6 +42,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".WebsiteView">
+        </activity>
+
+
         <!-- Goolge API Key -->
         <meta-data
             android:name="com.google.android.gms.version"
