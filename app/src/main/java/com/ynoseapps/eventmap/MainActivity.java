@@ -1,10 +1,8 @@
 package com.ynoseapps.eventmap;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +19,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,8 +35,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private GoogleMap googleMap;
-    ListView lv;
-    ArrayList<Event> list;
+    private ListView lv;
+    private ArrayList<Event> upcomingEvents = new ArrayList<Event>();
+    private EventAdapter eventAdapter;
+    //private ArrayList markerList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,17 +80,22 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
 
         lv = (ListView) findViewById(R.id.eventListView);
+        eventAdapter = new EventAdapter(MainActivity.this);
+        eventAdapter.setEventList(this.upcomingEvents);
+        lv.setAdapter(eventAdapter);
+
         //リスト項目がクリックされた時の処理
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//                Uri uri = Uri.parse(list.get(position).getUrl());
+//                Uri uri = Uri.parse(upcomingEvents.get(position).getUrl());
 //                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 //                startActivity(intent);
-
+//
+                // イベントサイト画面に繊維
                 Intent intent = new Intent(getApplicationContext(), WebsiteView.class);
-                intent.putExtra("url", list.get(position).getUrl());
+                intent.putExtra("url", upcomingEvents.get(position).getUrl());
                 startActivity(intent);
 
             }
@@ -117,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         HttpURLConnection connection = null;
         try {
             URL url = new URL("http://api.doorkeeper.jp/events?sort=starts_at&q=" + keyword);
+
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
@@ -136,13 +143,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
             }
 
-            this.list = new ArrayList<Event>();
+            this.upcomingEvents = new ArrayList<Event>();
             EventAdapter adapter = new EventAdapter(MainActivity.this);
-            adapter.setEventList(this.list);
+            adapter.setEventList(this.upcomingEvents);
             lv.setAdapter(adapter);
 
             // JSONをパース
-            //StringBuilder viewStrBuilder = new StringBuilder();
             JSONArray result = new JSONArray(new String(responseArray.toByteArray()));
             for(int i = 0; i < result.length(); i++) {
                 JSONObject eventJson = result.getJSONObject(i).getJSONObject("event");
@@ -151,10 +157,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 event.setTitle(eventJson.getString("title"));
                 event.setStartAtString(eventJson.getString("starts_at"));
                 event.setUrl(eventJson.getString("public_url"));
-                this.list.add(event);
+                this.upcomingEvents.add(event);
             }
 
-            adapter.notifyDataSetChanged();
+            eventAdapter.notifyDataSetChanged();
+
+          // mapDropPin();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -165,8 +173,26 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
+    private void mapDropPin() {
+
+        for (int i = 0; i < upcomingEvents.size(); i++) {
+            Event event = upcomingEvents.get(i);
+            LatLng location = new LatLng(event.latitude, event.longitude);
+
+            // マーカーの設定
+            MarkerOptions options = new MarkerOptions();
+            options.position(location);
+            options.title(event.venueName);
+            options.snippet(event.address);
+
+            // マップにマーカーを追加
+            googleMap.addMarker(options);
+        }
+
+    }
+
     // 地図の初期設定
-    @TargetApi(Build.VERSION_CODES.M)
+    //@TargetApi(Build.VERSION_CODES.M)
     private void mapInit() {
 
         // 地図タイプ設定（1）
