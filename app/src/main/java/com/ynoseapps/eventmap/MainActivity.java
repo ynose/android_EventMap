@@ -121,16 +121,44 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void getEvent(String keyword) {
 
-        HttpURLConnection connection = null;
-        try {
-            URL url = new URL("http://api.doorkeeper.jp/events?sort=starts_at&q=" + keyword);
+        this.upcomingEvents.clear();
 
+        try {
+
+            URL url = new URL("http://api.doorkeeper.jp/events?sort=starts_at&q=" + keyword);
+            JSONArray result = requestJason(url);
+
+            // JSONをパース
+            for(int i = 0; i < result.length(); i++) {
+                Event event = Event.createEventDoorkeeper(result.getJSONObject(i));
+                this.upcomingEvents.add(event);
+            }
+
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        this.eventAdapter.setEventList(this.upcomingEvents);
+        this.eventAdapter.notifyDataSetChanged();
+
+        // マップにピンを表示
+        mapDropPin();
+
+    }
+
+    // Jsonを取得
+    private JSONArray requestJason(URL url) throws IOException, JSONException {
+
+        HttpURLConnection connection = null;
+        JSONArray json = null;
+
+        try {
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
 
             if(connection.getResponseCode() != 200) {
-                return;
+                return null;
             }
 
             BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
@@ -144,27 +172,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
             }
 
-            // JSONをパース
-            this.upcomingEvents.clear();
-            JSONArray result = new JSONArray(new String(responseArray.toByteArray()));
-            for(int i = 0; i < result.length(); i++) {
-                Event event = Event.createEventDoorkeeper(result.getJSONObject(i));
-                this.upcomingEvents.add(event);
-            }
+            json = new JSONArray(new String(responseArray.toByteArray()));
 
-            this.eventAdapter.setEventList(this.upcomingEvents);
-            this.eventAdapter.notifyDataSetChanged();
-
-            // マップにピンを表示
-            mapDropPin();
-
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+            throw e;
         } finally{
-            connection.disconnect();
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
+
+        return json;
     }
 
     // マップにピンを表示
