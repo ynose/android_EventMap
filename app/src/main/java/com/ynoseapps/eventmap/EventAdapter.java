@@ -46,7 +46,7 @@ public class EventAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = layoutInflater.inflate(R.layout.event_row, parent, false);
 
-        ((TextView)convertView.findViewById(R.id.title)).setText(eventList.get(position).getTitle());
+        ((TextView)convertView.findViewById(R.id.title)).setText(eventList.get(position).title);
         ((TextView)convertView.findViewById(R.id.startAt)).setText(eventList.get(position).getStartAtFormatedString());
 
         return convertView;

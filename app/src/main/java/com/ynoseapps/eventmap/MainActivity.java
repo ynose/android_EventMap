@@ -19,6 +19,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private ListView lv;
     private ArrayList<Event> upcomingEvents = new ArrayList<Event>();
     private EventAdapter eventAdapter;
-    //private ArrayList markerList = new ArrayList<>();
+    private ArrayList<Marker> markers = new ArrayList<Marker>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         eventAdapter.setEventList(this.upcomingEvents);
         lv.setAdapter(eventAdapter);
 
+
         //リスト項目がクリックされた時の処理
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 //
                 // イベントサイト画面に繊維
                 Intent intent = new Intent(getApplicationContext(), WebsiteView.class);
-                intent.putExtra("url", upcomingEvents.get(position).getUrl());
+                intent.putExtra("url", upcomingEvents.get(position).url);
                 startActivity(intent);
 
             }
@@ -142,21 +144,19 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
             }
 
-            this.upcomingEvents = new ArrayList<Event>();
-            EventAdapter adapter = new EventAdapter(MainActivity.this);
-            adapter.setEventList(this.upcomingEvents);
-            lv.setAdapter(adapter);
-
             // JSONをパース
+            this.upcomingEvents.clear();
             JSONArray result = new JSONArray(new String(responseArray.toByteArray()));
             for(int i = 0; i < result.length(); i++) {
                 Event event = Event.createEventDoorkeeper(result.getJSONObject(i));
                 this.upcomingEvents.add(event);
             }
 
-            eventAdapter.notifyDataSetChanged();
+            this.eventAdapter.setEventList(this.upcomingEvents);
+            this.eventAdapter.notifyDataSetChanged();
 
-           mapDropPin();
+            // マップにピンを表示
+            mapDropPin();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -167,10 +167,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
+    // マップにピンを表示
     private void mapDropPin() {
 
-        for (int i = 0; i < upcomingEvents.size(); i++) {
-            Event event = upcomingEvents.get(i);
+        for (Marker marker : this.markers) {
+            marker.remove();
+        }
+        this.markers.clear();
+
+        for (int i = 0; i < this.upcomingEvents.size(); i++) {
+            Event event = this.upcomingEvents.get(i);
             LatLng location = new LatLng(event.latitude, event.longitude);
 
             // マーカーの設定
@@ -180,7 +186,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             options.snippet(event.address);
 
             // マップにマーカーを追加
-            googleMap.addMarker(options);
+            Marker marker = googleMap.addMarker(options);
+            this.markers.add(marker);
         }
 
     }
