@@ -23,7 +23,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -151,18 +150,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             // JSONをパース
             JSONArray result = new JSONArray(new String(responseArray.toByteArray()));
             for(int i = 0; i < result.length(); i++) {
-                JSONObject eventJson = result.getJSONObject(i).getJSONObject("event");
-
-                Event event = new Event();
-                event.setTitle(eventJson.getString("title"));
-                event.setStartAtString(eventJson.getString("starts_at"));
-                event.setUrl(eventJson.getString("public_url"));
+                Event event = Event.createEventDoorkeeper(result.getJSONObject(i));
                 this.upcomingEvents.add(event);
             }
 
             eventAdapter.notifyDataSetChanged();
 
-          // mapDropPin();
+           mapDropPin();
 
         } catch (IOException e) {
             e.printStackTrace();
