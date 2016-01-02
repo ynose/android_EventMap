@@ -170,6 +170,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         });
 
+        googleMap.setPadding(0, 48, 0, 0);
+
         // 東京駅の位置、ズーム設定（3）
         CameraPosition camerapos = new CameraPosition.Builder()
                 .target(new LatLng(35.681382, 139.766084)).zoom(15.5f).build();
@@ -217,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
         LatLngBounds bounds = builder.build();
 
-        int padding = 0;
+        int padding = 16;
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
 
         googleMap.animateCamera(cu);
