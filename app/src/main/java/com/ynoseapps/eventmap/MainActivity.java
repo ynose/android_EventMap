@@ -1,8 +1,6 @@
 package com.ynoseapps.eventmap;
 
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -12,23 +10,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -106,19 +102,20 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // HttpURLConnectionに必要
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
 
-        checkNetwork();
+//        checkNetwork();
 
         getEvent("iOS");
     }
 
-    private void checkNetwork() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo info = cm.getActiveNetworkInfo();
-        if (info.isConnected()) {
-            Toast.makeText(this, info.getTypeName() + " connected", Toast.LENGTH_LONG).show();
-        }
-    }
+//    private void checkNetwork() {
+//        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+//        NetworkInfo info = cm.getActiveNetworkInfo();
+//        if (info.isConnected()) {
+//            Toast.makeText(this, info.getTypeName() + " connected", Toast.LENGTH_LONG).show();
+//        }
+//    }
 
+    // イベント情報を取得
     private void getEvent(String keyword) {
 
         this.upcomingEvents.clear();
@@ -126,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         try {
 
             URL url = new URL("http://api.doorkeeper.jp/events?sort=starts_at&q=" + keyword);
-            JSONArray result = requestJason(url);
+            JSONArray result = EventRequestor.requestJason(url);
 
             // JSONをパース
             for(int i = 0; i < result.length(); i++) {
@@ -140,76 +137,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         this.eventAdapter.setEventList(this.upcomingEvents);
         this.eventAdapter.notifyDataSetChanged();
-
-        // マップにピンを表示
-        mapDropPin();
-
     }
 
-    // Jsonを取得
-    private JSONArray requestJason(URL url) throws IOException, JSONException {
-
-        HttpURLConnection connection = null;
-        JSONArray json = null;
-
-        try {
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
-
-            if(connection.getResponseCode() != 200) {
-                return null;
-            }
-
-            BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
-            ByteArrayOutputStream responseArray = new ByteArrayOutputStream();
-            byte[] buff = new byte[1024];
-
-            int length;
-            while((length = inputStream.read(buff)) != -1) {
-                if(length > 0) {
-                    responseArray.write(buff, 0, length);
-                }
-            }
-
-            json = new JSONArray(new String(responseArray.toByteArray()));
-
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-            throw e;
-        } finally{
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-
-        return json;
-    }
-
-    // マップにピンを表示
-    private void mapDropPin() {
-
-        for (Marker marker : this.markers) {
-            marker.remove();
-        }
-        this.markers.clear();
-
-        for (int i = 0; i < this.upcomingEvents.size(); i++) {
-            Event event = this.upcomingEvents.get(i);
-            LatLng location = new LatLng(event.latitude, event.longitude);
-
-            // マーカーの設定
-            MarkerOptions options = new MarkerOptions();
-            options.position(location);
-            options.title(event.venueName);
-            options.snippet(event.address);
-
-            // マップにマーカーを追加
-            Marker marker = googleMap.addMarker(options);
-            this.markers.add(marker);
-        }
-
-    }
 
     // 地図の初期設定
     //@TargetApi(Build.VERSION_CODES.M)
@@ -232,12 +161,66 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         //}
 //        googleMap.setMyLocationEnabled(true);
 
+        googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                // マップにピンを表示
+                mapDropPin();
+                mapZoom();
+            }
+        });
+
         // 東京駅の位置、ズーム設定（3）
         CameraPosition camerapos = new CameraPosition.Builder()
                 .target(new LatLng(35.681382, 139.766084)).zoom(15.5f).build();
 
         // 地図の中心を変更する（4）
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camerapos));
+    }
+
+    // マップにピンを表示
+    private void mapDropPin() {
+
+        // 古いピンを削除
+        for (Marker marker : this.markers) {
+            marker.remove();
+        }
+        this.markers.clear();
+
+        // 開催場所のピンを表示
+        for (Event event: this.upcomingEvents) {
+
+            if (event.latitude != 0 && event.longitude != 0) {
+                LatLng location = new LatLng(event.latitude, event.longitude);
+
+                // マーカーの設定
+                MarkerOptions options = new MarkerOptions();
+                options.position(location);
+                options.title(event.venueName);
+                options.snippet(event.address);
+
+                // マップにマーカーを追加
+                Marker marker = googleMap.addMarker(options);
+                this.markers.add(marker);
+            }
+
+        }
+
+    }
+
+    // ピンが表示される範囲にマップをズーム
+    private void mapZoom() {
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (Marker marker : this.markers) {
+            builder.include(marker.getPosition());
+        }
+        LatLngBounds bounds = builder.build();
+
+        int padding = 0;
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+
+        googleMap.animateCamera(cu);
     }
 
     @Override
@@ -259,9 +242,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
 
+        // イベントを検索
         getEvent(query);
+
+        // マップにピンを表示
+        mapDropPin();
+        mapZoom();
 
         return false;
     }
