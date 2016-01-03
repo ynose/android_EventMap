@@ -80,21 +80,25 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         eventAdapter.setEventList(this.upcomingEvents);
         lv.setAdapter(eventAdapter);
 
-
         //リスト項目がクリックされた時の処理
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Event event = upcomingEvents.get(position);
+                showMarkerAtEvent(event);
+            }
+        });
 
-//                Uri uri = Uri.parse(upcomingEvents.get(position).getUrl());
-//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                startActivity(intent);
-//
-                // イベントサイト画面に繊維
+        //リスト項目がロングクリックされた時の処理
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                // イベントサイト画面に遷移
                 Intent intent = new Intent(getApplicationContext(), WebsiteView.class);
                 intent.putExtra("url", upcomingEvents.get(position).url);
                 startActivity(intent);
 
+                return false;
             }
         });
 
@@ -107,7 +111,22 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         getEvent("iOS");
     }
 
-//    private void checkNetwork() {
+    private void showMarkerAtEvent(Event event) {
+
+        String venueName = event.venueName;
+
+        for (Marker marker: markers) {
+            if (marker.getTitle().equals(venueName)) {
+                mapZoom(marker.getPosition());
+
+                marker.showInfoWindow();
+                break;
+            }
+        }
+
+    }
+
+    //    private void checkNetwork() {
 //        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 //        NetworkInfo info = cm.getActiveNetworkInfo();
 //        if (info.isConnected()) {
@@ -166,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             public void onMapLoaded() {
                 // マップにピンを表示
                 mapDropPin();
-                mapZoom();
+                mapZoomAtMarkers(markers);
             }
         });
 
@@ -211,16 +230,28 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     // ピンが表示される範囲にマップをズーム
-    private void mapZoom() {
+    private void mapZoomAtMarkers(ArrayList<Marker> markers) {
+
+        if (markers.size() == 0) { return; }
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (Marker marker : this.markers) {
+        for (Marker marker : markers) {
             builder.include(marker.getPosition());
         }
         LatLngBounds bounds = builder.build();
 
         int padding = 16;
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+
+        googleMap.animateCamera(cu);
+    }
+
+    private void mapZoom(LatLng latLng) {
+        float zoom = 15.0f;     //ズームレベル
+        float tilt = 0.0f;      // 0.0 - 90.0  //チルトアングル
+        float bearing = 0.0f;   //向き
+        CameraPosition pos = new CameraPosition(latLng, zoom, tilt, bearing);
+        CameraUpdate cu = CameraUpdateFactory.newCameraPosition(pos);
 
         googleMap.animateCamera(cu);
     }
@@ -250,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         // マップにピンを表示
         mapDropPin();
-        mapZoom();
+        mapZoomAtMarkers(this.markers);
 
         return false;
     }
