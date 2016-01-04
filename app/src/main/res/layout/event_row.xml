@@ -8,18 +8,16 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItem"
         android:id="@+id/title"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_margin="10dp" />
+        android:layout_margin="4dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:text="Date"
         android:id="@+id/startAt"
-        android:layout_below="@+id/title"
-        android:layout_alignStart="@+id/title"
-        android:layout_margin="10dp" />
+        android:layout_margin="4dp"
+        android:textSize="12sp"
+        android:textColor="@color/colorAtartAt"
+        />
 
 </LinearLayout>

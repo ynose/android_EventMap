@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3a8233</color>
     <color name="colorPrimaryDark">#3a8233</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorAtartAt">#8e8e8e</color>
+    <color name="colorAtartAtSaturday">#8198fc</color>
+    <color name="colorAtartAtSunday">#f28585</color>
 </resources>
