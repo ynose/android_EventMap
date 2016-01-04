@@ -75,19 +75,39 @@ public class EventAdapter extends BaseAdapter {
                 startAtColor = R.color.colorStartAt;
                 break;
         }
+        startAt.setTextColor(getColorResource(startAtColor));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            startAt.setTextColor(context.getResources().getColor(startAtColor, null));
-        } else {
-            startAt.setTextColor(context.getResources().getColor(startAtColor));
+
+        // 参加者数/定員
+        TextView accepted = ((TextView) convertView.findViewById(R.id.accepted));
+        accepted.setText(event.accepted.toString());
+
+        // 参加者数の割合に応じで色を変える
+        Double percent = event.limit > 0 ? event.accepted / event.limit : 0.0;
+        if (event.limit - event.accepted == 1) {        // 残り１人 = 黄色
+            accepted.setTextColor(getColorResource(R.color.colorLimitYellow));
+        } else if (percent < 0.9) {                     // 90%未満 = グレー（デフォルト）
+            accepted.setTextColor(getColorResource(R.color.colorAccepted));
+        } else if ((0.9 < percent && percent < 1.0)) {  // 90%以上 = 黄色
+            accepted.setTextColor(getColorResource(R.color.colorLimitYellow));
+        } else {                                        // 100%   = 赤色
+            accepted.setTextColor(getColorResource(R.color.colorLimitMax));
         }
 
-
-        // 定員
         TextView limit = ((TextView) convertView.findViewById(R.id.limit));
-        limit.setText(event.accepted + "/" + event.limit + "人");
+        limit.setText("/" + event.limit + "人");
 
         return convertView;
+    }
+
+    private int getColorResource(int color) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getResources().getColor(color, null);
+        } else {
+            return context.getResources().getColor(color);
+        }
+
     }
 
 }
