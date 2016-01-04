@@ -66,13 +66,13 @@ public class EventAdapter extends BaseAdapter {
         int startAtColor;
         switch (calendarStartAt.get(Calendar.DAY_OF_WEEK)) {
             case Calendar.SATURDAY:
-                startAtColor = R.color.colorAtartAtSaturday;
+                startAtColor = R.color.colorStartAtSaturday;
                 break;
             case Calendar.SUNDAY:
-                startAtColor = R.color.colorAtartAtSunday;
+                startAtColor = R.color.colorStartAtSunday;
                 break;
             default:
-                startAtColor = R.color.colorAtartAt;
+                startAtColor = R.color.colorStartAt;
                 break;
         }
 
@@ -81,6 +81,11 @@ public class EventAdapter extends BaseAdapter {
         } else {
             startAt.setTextColor(context.getResources().getColor(startAtColor));
         }
+
+
+        // 定員
+        TextView limit = ((TextView) convertView.findViewById(R.id.limit));
+        limit.setText(event.accepted + "/" + event.limit + "人");
 
         return convertView;
     }
