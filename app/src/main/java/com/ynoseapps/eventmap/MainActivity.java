@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private ArrayList<Event> upcomingEvents = new ArrayList<Event>();
     private EventAdapter eventAdapter;
     private ArrayList<Marker> markers = new ArrayList<Marker>();
+    private Marker selectedMarker = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,13 +114,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void showMarkerAtEvent(Event event) {
 
+        // infoWindowを消去
+        if (this.selectedMarker != null) {
+            this.selectedMarker.hideInfoWindow();
+        }
+
+        // 指定の会場のピンにズーム
         String venueName = event.venueName;
 
         for (Marker marker: markers) {
             if (marker.getTitle().equals(venueName)) {
-                mapZoom(marker.getPosition());
-
-                marker.showInfoWindow();
+                mapZoomAtLatLng(marker.getPosition());
+                this.selectedMarker = marker;
                 break;
             }
         }
@@ -165,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         // 地図タイプ設定（1）
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        googleMap.setPadding(0, 48, 0, 0);
 
         // 現在位置ボタンの表示（2）
         // ここで落ちる
@@ -184,32 +191,33 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             @Override
             public void onMapLoaded() {
                 // マップにピンを表示
-                mapDropPin();
+                mapDropPin(upcomingEvents);
                 mapZoomAtMarkers(markers);
             }
         });
 
-        googleMap.setPadding(0, 48, 0, 0);
 
-        // 東京駅の位置、ズーム設定（3）
+        // 東京駅の位置、ズーム設定
+        // TODO: 現在地に変更する
         CameraPosition camerapos = new CameraPosition.Builder()
                 .target(new LatLng(35.681382, 139.766084)).zoom(15.5f).build();
 
-        // 地図の中心を変更する（4）
+        // 地図の中心を変更する
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camerapos));
     }
 
     // マップにピンを表示
-    private void mapDropPin() {
+    private void mapDropPin(ArrayList<Event> events) {
 
         // 古いピンを削除
         for (Marker marker : this.markers) {
             marker.remove();
         }
         this.markers.clear();
+        this.selectedMarker = null;
 
         // 開催場所のピンを表示
-        for (Event event: this.upcomingEvents) {
+        for (Event event: events) {
 
             if (event.latitude != 0 && event.longitude != 0) {
                 LatLng location = new LatLng(event.latitude, event.longitude);
@@ -246,14 +254,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         googleMap.animateCamera(cu);
     }
 
-    private void mapZoom(LatLng latLng) {
+    private void mapZoomAtLatLng(LatLng latLng) {
+
         float zoom = 15.0f;     //ズームレベル
         float tilt = 0.0f;      // 0.0 - 90.0  //チルトアングル
         float bearing = 0.0f;   //向き
         CameraPosition pos = new CameraPosition(latLng, zoom, tilt, bearing);
         CameraUpdate cu = CameraUpdateFactory.newCameraPosition(pos);
 
-        googleMap.animateCamera(cu);
+        // ピンの位置にズームして、,infoWindowを表示する
+        googleMap.animateCamera(cu, new GoogleMap.CancelableCallback() {
+            @Override
+            public void onFinish() {
+                if (selectedMarker != null) {
+                    selectedMarker.showInfoWindow();
+                }
+            }
+
+            @Override
+            public void onCancel() {}
+        });
+
     }
 
     @Override
@@ -280,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         getEvent(query);
 
         // マップにピンを表示
-        mapDropPin();
+        mapDropPin(upcomingEvents);
         mapZoomAtMarkers(this.markers);
 
         return false;
